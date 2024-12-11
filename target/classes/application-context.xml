@@ -9,4 +9,8 @@
     <bean id="banking" class="com.luxoft.bankapp.service.BankingImpl"/>
     <bean id="reportService" class="com.luxoft.bankapp.service.BankReportServiceImpl"/>
 
+    <bean class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
+        <property name="location" value="clients.properties"/>
+    </bean>
+
 </beans>

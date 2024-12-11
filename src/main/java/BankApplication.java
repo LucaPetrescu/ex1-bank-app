@@ -30,7 +30,14 @@ public class BankApplication {
 
 //        bankReportsDemo(repository);
 
-        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
+//        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext("application-context.xml");
+
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
+                new String[] {
+                        "application-context.xml",
+                        "test-clients.xml"
+                }
+        );
 
         Banking banking = initialize(context);
 
@@ -157,6 +164,36 @@ public class BankApplication {
 //        return banking;
 //    }
 
+//    public static Banking initialize(ApplicationContext context){
+//        Banking banking = (Banking) context.getBean("banking");
+//
+//        ClientRepository repository = (ClientRepository) context.getBean("repository");
+//
+//        BankReportServiceImpl reportService = (BankReportServiceImpl) context.getBean("reportService");
+//
+//        banking.setRepository(repository);
+//
+//        reportService.setRepository(repository);
+//
+//        Client client_1 = new Client(CLIENT_NAMES[0], Gender.MALE);
+//
+//        AbstractAccount savingAccount = new SavingAccount(1000);
+//        client_1.addAccount(savingAccount);
+//
+//        AbstractAccount checkingAccount = new CheckingAccount(1000);
+//        client_1.addAccount(checkingAccount);
+//
+//        Client client_2 = new Client(CLIENT_NAMES[1], Gender.MALE);
+//
+//        AbstractAccount checking = new CheckingAccount(1500);
+//        client_2.addAccount(checking);
+//
+//        banking.addClient(client_1);
+//        banking.addClient(client_2);
+//
+//        return  banking;
+//    }
+
     public static Banking initialize(ApplicationContext context){
         Banking banking = (Banking) context.getBean("banking");
 
@@ -168,21 +205,18 @@ public class BankApplication {
 
         reportService.setRepository(repository);
 
-        Client client_1 = new Client(CLIENT_NAMES[0], Gender.MALE);
+        Client client_1 = (Client) context.getBean("client1");
+        Client client_2 = (Client) context.getBean("client2");
 
-        AbstractAccount savingAccount = new SavingAccount(1000);
-        client_1.addAccount(savingAccount);
-
-        AbstractAccount checkingAccount = new CheckingAccount(1000);
-        client_1.addAccount(checkingAccount);
-
-        Client client_2 = new Client(CLIENT_NAMES[1], Gender.MALE);
-
-        AbstractAccount checking = new CheckingAccount(1500);
-        client_2.addAccount(checking);
+//        Client client_2 = new Client(CLIENT_NAMES[1], Gender.MALE);
+//
+//        AbstractAccount checking = new CheckingAccount(1500);
+//        client_2.addAccount(checking);
 
         banking.addClient(client_1);
         banking.addClient(client_2);
+
+        System.out.println("Hello from initialize " + client_1.getName());
 
         return  banking;
     }
