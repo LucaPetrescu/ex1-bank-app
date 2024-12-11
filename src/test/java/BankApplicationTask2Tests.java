@@ -19,6 +19,7 @@ import org.springframework.test.context.junit.jupiter.SpringJUnitConfig;
 import static org.junit.jupiter.api.Assertions.*;
 
 //@SpringJUnitConfig(locations = {"classpath:application-context.xml", "classpath:test-clients.xml"})
+@SpringJUnitConfig(BankApplication.class)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class BankApplicationTask2Tests {
