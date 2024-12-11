@@ -37,15 +37,33 @@ public class BankApplication {
         workWithExistingClients(banking);
         bankingServiceDemo(banking);
 
-        System.out.println("Finished ex1-task1");
+        bankReportsDemo(context);
+
+        System.out.println("Finished ex1-task2");
 
     }
 
-    public static void bankReportsDemo(ClientRepository repository) {
+//    public static void bankReportsDemo(ClientRepository repository) {
+//
+//        System.out.println("\n=== Using BankReportService ===\n");
+//
+//        BankReportService reportService = new BankReportServiceImpl();
+//        reportService.setRepository(repository);
+//
+//        System.out.println("Number of clients: " + reportService.getNumberOfBankClients());
+//
+//        System.out.println("Number of accounts: " + reportService.getAccountsNumber());
+//
+//        System.out.println("Bank Credit Sum: " + reportService.getBankCreditSum());
+//    }
 
+    public static void bankReportsDemo(ApplicationContext context){
         System.out.println("\n=== Using BankReportService ===\n");
 
-        BankReportService reportService = new BankReportServiceImpl();
+        BankReportService reportService = (BankReportService) context.getBean("reportService");
+
+        ClientRepository repository = (ClientRepository) context.getBean("repository");
+
         reportService.setRepository(repository);
 
         System.out.println("Number of clients: " + reportService.getNumberOfBankClients());
@@ -53,6 +71,8 @@ public class BankApplication {
         System.out.println("Number of accounts: " + reportService.getAccountsNumber());
 
         System.out.println("Bank Credit Sum: " + reportService.getBankCreditSum());
+
+
     }
 
     public static void bankingServiceDemo(Banking banking) {
@@ -140,9 +160,13 @@ public class BankApplication {
     public static Banking initialize(ApplicationContext context){
         Banking banking = (Banking) context.getBean("banking");
 
-        ClientRepository repository = new MapClientRepository();
+        ClientRepository repository = (ClientRepository) context.getBean("repository");
+
+        BankReportServiceImpl reportService = (BankReportServiceImpl) context.getBean("reportService");
 
         banking.setRepository(repository);
+
+        reportService.setRepository(repository);
 
         Client client_1 = new Client(CLIENT_NAMES[0], Gender.MALE);
 
